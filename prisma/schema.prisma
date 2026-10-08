@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  PENGURUS
+}
+
+enum StatusPublikasi {
+  DRAFT
+  PUBLIK
+}
+
+enum StatusAspirasi {
+  MENUNGGU
+  DIPROSES
+  SELESAI
+}
+
+model User {
+  id         Int               @id @default(autoincrement())
+  nama       String
+  email      String            @unique
+  password   String
+  jabatan    String?
+  telepon    String?
+  nik        String?
+  unitKerja  String?           @map("unit_kerja")
+  avatar     String?
+  role       Role              @default(ADMIN)
+  createdAt  DateTime          @default(now()) @map("created_at")
+  laporan    LaporanKeuangan[]
+
+  @@map("users")
+}
+
+// Satu baris saja (id = 1): identitas BUMDes.
+model Bumdes {
+  id           Int               @id @default(autoincrement())
+  nama         String
+  tahunBerdiri Int?              @map("tahun_berdiri")
+  dasarHukum   String?           @map("dasar_hukum")
+  email        String?
+  telepon      String?
+  alamat       String?
+  deskripsi    String?
+  visi         String?
+  misi         String?
+  logo         String?
+  unitUsaha    UnitUsaha[]
+  laporan      LaporanKeuangan[]
+
+  @@map("bumdes")
+}
+
+model UnitUsaha {
+  id              Int      @id @default(autoincrement())
+  bumdesId        Int      @map("bumdes_id")
+  bumdes          Bumdes   @relation(fields: [bumdesId], references: [id], onDelete: Cascade)
+  nama            String
+  kategori        String
+  penanggungJawab String   @map("penanggung_jawab")
+  kontak          String
+  deskripsi       String?
+  foto            String?
+  // Metrik unggulan bebas per unit (Omset Bulanan / Tingkat Pengunjung / Kapasitas Cakupan)
+  metrikLabel     String?  @map("metrik_label")
+  metrikNilai     String?  @map("metrik_nilai")
+  aktif           Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  @@map("unit_usaha")
+}
+
+// Rekap buku kas bulanan. saldo_bersih tidak disimpan: dihitung = pemasukan - pengeluaran.
+model LaporanKeuangan {
+  id               Int             @id @default(autoincrement())
+  bumdesId         Int             @map("bumdes_id")
+  bumdes           Bumdes          @relation(fields: [bumdesId], references: [id], onDelete: Cascade)
+  createdById      Int?            @map("created_by")
+  createdBy        User?           @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  bulan            Int // 1-12
+  tahun            Int
+  // ponytail: Int (maks ~2,1 M rupiah per bulan). Ganti ke BigInt bila omzet bulanan bisa lewat itu.
+  totalPemasukan   Int             @map("total_pemasukan")
+  totalPengeluaran Int             @map("total_pengeluaran")
+  keterangan       String?
+  fileLpj          String?         @map("file_lpj")
+  status           StatusPublikasi @default(DRAFT)
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+
+  @@unique([bumdesId, bulan, tahun])
+  @@map("laporan_keuangan")
+}
+
+model Aspirasi {
+  id              Int            @id @default(autoincrement())
+  nama            String
+  kategori        String
+  whatsapp        String?
+  dusun           String?
+  pesan           String
+  status          StatusAspirasi @default(MENUNGGU)
+  catatanInternal String?        @map("catatan_internal")
+  publik          Boolean        @default(false)
+  createdAt       DateTime       @default(now()) @map("created_at")
+
+  @@map("aspirasi")
+}
+
+// ponytail: notifikasi global (semua admin lihat sama). Tambah user_id bila perlu per-user.
+model Notifikasi {
+  id        Int      @id @default(autoincrement())
+  judul     String
+  pesan     String
+  tipe      String // aspirasi | laporan | unit | sistem
+  dibaca    Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("notifikasi")
+}
