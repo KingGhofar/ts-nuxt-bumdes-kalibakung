@@ -25,39 +25,55 @@ enum StatusAspirasi {
 }
 
 model User {
-  id         Int               @id @default(autoincrement())
-  nama       String
-  email      String            @unique
-  password   String
-  jabatan    String?
-  telepon    String?
-  nik        String?
-  unitKerja  String?           @map("unit_kerja")
-  avatar     String?
-  role       Role              @default(ADMIN)
-  createdAt  DateTime          @default(now()) @map("created_at")
-  laporan    LaporanKeuangan[]
+  id        Int               @id @default(autoincrement())
+  nama      String
+  email     String            @unique
+  password  String
+  jabatan   String?
+  telepon   String?
+  nik       String?
+  unitKerja String?           @map("unit_kerja")
+  avatar    String?
+  role      Role              @default(ADMIN)
+  createdAt DateTime          @default(now()) @map("created_at")
+  laporan   LaporanKeuangan[]
 
   @@map("users")
 }
 
 // Satu baris saja (id = 1): identitas BUMDes.
 model Bumdes {
-  id           Int               @id @default(autoincrement())
-  nama         String
-  tahunBerdiri Int?              @map("tahun_berdiri")
-  dasarHukum   String?           @map("dasar_hukum")
-  email        String?
-  telepon      String?
-  alamat       String?
-  deskripsi    String?
-  visi         String?
-  misi         String?
-  logo         String?
-  unitUsaha    UnitUsaha[]
-  laporan      LaporanKeuangan[]
+  id             Int               @id @default(autoincrement())
+  nama           String
+  tahunBerdiri   Int?              @map("tahun_berdiri")
+  dasarHukum     String?           @map("dasar_hukum")
+  email          String?
+  telepon        String?
+  alamat         String?
+  deskripsi      String?
+  visi           String?
+  misi           String?
+  logo           String?
+  // Satu baris per hari: "Senin - Kamis | 08:00 - 15:30 WIB"
+  jamOperasional String?           @map("jam_operasional")
+  unitUsaha      UnitUsaha[]
+  laporan        LaporanKeuangan[]
+  pengurus       Pengurus[]
 
   @@map("bumdes")
+}
+
+model Pengurus {
+  id         Int     @id @default(autoincrement())
+  bumdesId   Int     @map("bumdes_id")
+  bumdes     Bumdes  @relation(fields: [bumdesId], references: [id], onDelete: Cascade)
+  nama       String
+  jabatan    String
+  keterangan String? // periode / SK
+  foto       String?
+  urutan     Int     @default(0)
+
+  @@map("pengurus")
 }
 
 model UnitUsaha {
@@ -66,8 +82,9 @@ model UnitUsaha {
   bumdes          Bumdes   @relation(fields: [bumdesId], references: [id], onDelete: Cascade)
   nama            String
   kategori        String
-  penanggungJawab String   @map("penanggung_jawab")
-  kontak          String
+  // Nullable: data unit dari sumber publik bisa belum lengkap. Form admin tetap mewajibkan.
+  penanggungJawab String?  @map("penanggung_jawab")
+  kontak          String?
   deskripsi       String?
   foto            String?
   // Metrik unggulan bebas per unit (Omset Bulanan / Tingkat Pengunjung / Kapasitas Cakupan)

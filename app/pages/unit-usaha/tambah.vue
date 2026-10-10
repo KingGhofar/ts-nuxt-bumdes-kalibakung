@@ -1,5 +1,5 @@
 <script setup lang="ts">
-useHead({ title: 'Tambah Unit Usaha · BUMDes Maju Jaya' })
+useHead({ title: 'Tambah Unit Usaha' })
 </script>
 
 <template>

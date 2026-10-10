@@ -13,28 +13,28 @@ async function pick(f?: File | null) {
   busy.value = true
   try { model.value = (await uploadFile(f, props.kind)).name }
   catch (e) { error(e) }
-  finally { busy.value = false }
+  finally { busy.value = false; if (input.value) input.value.value = '' }
 }
 </script>
 
 <template>
   <div
-    class="rounded-xl border-2 border-dashed p-6 text-center transition"
-    :class="over ? 'border-primary bg-blue-50' : 'border-line bg-slate-50'"
+    class="rounded-xl border-2 border-dashed px-4 py-6 text-center transition"
+    :class="over ? 'border-primary bg-blue-50' : 'border-slate-300 bg-slate-50/60'"
     @dragover.prevent="over = true" @dragleave="over = false"
     @drop.prevent="over = false; pick($event.dataTransfer?.files[0])"
   >
-    <div v-if="model" class="flex items-center justify-center gap-3 text-sm">
-      <img v-if="kind === 'image'" :src="fileUrl(model)" alt="" class="size-16 rounded-lg object-cover">
-      <FileCheck2 v-else class="size-6 text-green-600" />
+    <div v-if="model" class="flex flex-wrap items-center justify-center gap-3 text-sm">
+      <img v-if="kind === 'image'" :src="fileUrl(model)" alt="" class="h-20 w-32 rounded-lg object-cover">
+      <FileCheck2 v-else class="size-6 text-emerald-600" />
       <a :href="fileUrl(model)" target="_blank" class="font-medium text-primary underline">Lihat file</a>
-      <button type="button" class="rounded p-1 text-muted hover:bg-slate-200" aria-label="Hapus file" @click="model = null"><X class="size-4" /></button>
+      <button type="button" class="btn-outline px-3 py-1.5 text-xs" :disabled="busy" @click="input?.click()">Ganti</button>
+      <button type="button" class="icon-btn size-8" aria-label="Hapus file" @click="model = null"><X class="size-4" /></button>
     </div>
     <template v-else>
-      <UploadCloud class="mx-auto size-8 text-muted" />
-      <p class="mt-2 text-sm">Seret file ke sini atau <button type="button" class="font-semibold text-primary" @click="input?.click()">klik untuk memilih file</button></p>
-      <p class="mt-1 text-xs text-muted">{{ hint }}</p>
-      <button type="button" class="btn-outline mt-4" :disabled="busy" @click="input?.click()">{{ busy ? 'Mengunggah…' : 'Pilih Berkas Komputer' }}</button>
+      <span class="mx-auto grid size-12 place-items-center rounded-full bg-blue-100 text-primary"><UploadCloud class="size-6" /></span>
+      <p class="mt-3 text-sm">Tarik dan lepas file ke sini, atau <button type="button" class="font-semibold text-primary hover:underline" @click="input?.click()">{{ busy ? 'mengunggah…' : 'Pilih Berkas Komputer' }}</button></p>
+      <p class="mt-1 text-xs font-medium text-muted">{{ hint }}</p>
     </template>
     <input ref="input" type="file" class="hidden" :accept="accept" @change="pick(($event.target as HTMLInputElement).files?.[0])">
   </div>

@@ -1,1 +1,1 @@
-export default defineEventHandler(() => prisma.bumdes.findFirst())
+export default defineEventHandler(() => prisma.bumdes.findFirst({ include: { pengurus: { orderBy: { urutan: 'asc' } } } }))

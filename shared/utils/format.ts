@@ -2,6 +2,8 @@ export const BULAN = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'J
 
 export const rupiah = (n: number) => 'Rp ' + Math.round(n).toLocaleString('id-ID')
 
+export const persen = (n: number, digits = 1) => `${n.toLocaleString('id-ID', { maximumFractionDigits: digits, minimumFractionDigits: digits })}%`
+
 export const periode = (bulan: number, tahun: number) => `${BULAN[bulan - 1]} ${tahun}`
 
 export const tanggal = (d: string | Date) =>

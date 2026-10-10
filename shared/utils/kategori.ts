@@ -1,2 +1,2 @@
-export const KATEGORI_ASPIRASI = ['PAM Desa (Tirta Jaya)', 'Desa Wisata', 'Sewa Alat Pertanian', 'Ide Usaha Baru', 'Lainnya']
-export const DUSUN = ['Dusun Karang Anyar', 'Dusun Sukarame', 'Dusun Mekarsari', 'Dusun Krajan']
+export const KATEGORI_ASPIRASI = ['Air Bersih', 'Pengelolaan Sampah', 'Sarana Olahraga', 'Wisata Kalimus', 'Ide Usaha Baru', 'Lainnya']
+export const KATEGORI_UNIT = ['Utilitas Air Bersih', 'Pengelolaan Sampah', 'Sarana Olahraga', 'Pariwisata & Edukasi', 'Pertanian', 'Perdagangan', 'Jasa', 'Lainnya']

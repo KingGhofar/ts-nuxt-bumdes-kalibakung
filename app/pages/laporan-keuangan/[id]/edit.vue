@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const id = useRoute().params.id
 const { data: l } = await useFetch<any>(`/api/laporan/${id}`)
-useHead({ title: 'Edit Laporan · BUMDes Maju Jaya' })
+useHead({ title: 'Edit Laporan' })
 </script>
 
 <template>
