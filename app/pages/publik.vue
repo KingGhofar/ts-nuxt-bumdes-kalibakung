@@ -72,12 +72,12 @@ async function kirim() {
         <nav class="mx-auto hidden rounded-full border border-slate-200 bg-slate-100/80 p-1 lg:flex" aria-label="Navigasi portal">
           <a v-for="[id, l] in nav" :key="id" :href="`#${id}`" class="rounded-full px-4 py-1.5 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-brand-dark hover:shadow-sm">{{ l }}</a>
         </nav>
-        <NuxtLink to="/login" class="btn ml-auto hidden border border-slate-300 bg-white py-2.5 hover:bg-slate-50 lg:ml-0 lg:inline-flex"><Lock class="size-4" /> Login Pengurus</NuxtLink>
+        <NuxtLink to="/login" class="btn ml-auto hidden rounded-full border border-slate-300 bg-white px-5 py-2.5 hover:bg-slate-50 lg:ml-0 lg:inline-flex"><Lock class="size-4" /> Login Pengurus</NuxtLink>
         <button class="icon-btn ml-auto lg:hidden" :aria-expanded="menu" aria-label="Menu" @click="menu = !menu"><component :is="menu ? X : Menu" class="size-6" /></button>
       </div>
       <div v-if="menu" class="border-t border-slate-100 bg-white px-4 pb-4 lg:hidden">
         <a v-for="[id, l] in nav" :key="id" :href="`#${id}`" class="block rounded-lg px-3 py-3 font-medium hover:bg-slate-50" @click="menu = false">{{ l }}</a>
-        <NuxtLink to="/login" class="btn mt-2 w-full border border-slate-300"><Lock class="size-4" /> Login Pengurus</NuxtLink>
+        <NuxtLink to="/login" class="btn mt-2 w-full rounded-full border border-slate-300"><Lock class="size-4" /> Login Pengurus</NuxtLink>
       </div>
     </header>
 
@@ -152,12 +152,10 @@ async function kirim() {
           </div>
           <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div class="rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 text-white">
-              <Target class="size-8 text-emerald-200" />
               <p class="mt-4 text-xs font-bold uppercase tracking-wider text-emerald-200">Visi</p>
               <p class="mt-2 text-xl font-semibold leading-relaxed">{{ b?.visi || 'Visi BUMDes akan segera diperbarui oleh pengurus.' }}</p>
             </div>
             <div class="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-8">
-              <Flag class="size-8 text-brand" />
               <p class="mt-4 text-xs font-bold uppercase tracking-wider text-brand-dark">Misi</p>
               <ol v-if="misi.length" class="mt-3 space-y-3">
                 <li v-for="(m, i) in misi" :key="i" class="flex gap-3 text-slate-700"><span class="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-xs font-bold text-brand-dark">{{ i + 1 }}</span>{{ m }}</li>
@@ -286,13 +284,13 @@ async function kirim() {
       <!-- ASPIRASI -->
       <section id="aspirasi" class="scroll-mt-20 bg-[#F0FAF5] py-20">
         <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-8 lg:grid-cols-[1fr_1.4fr]">
-          <div class="min-w-0 lg:sticky lg:top-24 lg:self-start">
+          <div class="min-w-0">
             <span class="rounded-full border border-emerald-200 bg-emerald-100 px-4 py-1 text-xs font-bold uppercase tracking-wider text-brand-dark">Suara Warga Desa</span>
             <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Aspirasi &amp; Masukan Warga</h2>
             <p class="mt-4 text-lg leading-relaxed text-slate-600">Punya kritik membangun, saran perluasan usaha, atau kendala fasilitas desa? Sampaikan langsung melalui form ini. Semua saran dicatat dan ditindaklanjuti secara berkala.</p>
             <template v-if="data?.aspirasi.length">
-              <p class="mt-10 flex items-center gap-2 text-sm font-bold uppercase tracking-wider"><CheckCheck class="size-4 text-brand" /> Aspirasi Terbaru</p>
-              <div class="mt-4 space-y-4">
+              <p class="mt-10 flex items-center gap-2 text-sm font-bold uppercase tracking-wider"><CheckCheck class="size-4 text-brand" /> Aspirasi Terbaru <span class="ml-auto text-xs font-semibold normal-case tracking-normal text-slate-400">{{ data.aspirasi.length }} pesan</span></p>
+              <div class="mt-4 max-h-[19rem] space-y-4 overflow-y-auto overscroll-contain pr-2 [scrollbar-width:thin]" tabindex="0" aria-label="Daftar aspirasi terbaru">
                 <div v-for="a in data.aspirasi" :key="a.id" class="rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm">
                   <div class="flex items-center gap-3">
                     <span class="grid size-9 shrink-0 place-items-center rounded-full border border-slate-200 bg-slate-100 text-xs font-bold">{{ inisial(a.nama) }}</span>
@@ -305,7 +303,7 @@ async function kirim() {
             </template>
           </div>
 
-          <form class="min-w-0 rounded-3xl border border-emerald-100 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,.05)] sm:p-10" @submit.prevent="kirim">
+          <form class="min-w-0 self-start rounded-3xl border border-emerald-100 bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,.05)] sm:p-10" @submit.prevent="kirim">
             <div class="flex items-center gap-4 border-b border-slate-100 pb-6">
               <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-brand text-white shadow-md shadow-emerald-600/30"><Send class="size-5" /></span>
               <div><p class="text-xl font-bold">Formulir Aspirasi Publik</p><p class="text-sm text-muted">Kritik &amp; masukan langsung masuk ke dashboard pengurus.</p></div>
@@ -336,7 +334,7 @@ async function kirim() {
               </div>
               <!-- Honeypot anti-bot: disembunyikan dari manusia -->
               <input v-model="f.website" type="text" name="website" tabindex="-1" autocomplete="off" class="absolute -left-[9999px] size-px opacity-0" aria-hidden="true">
-              <button class="btn w-full bg-brand py-4 text-base font-bold text-white shadow-lg shadow-emerald-600/25 hover:bg-brand-dark" :disabled="busy">{{ busy ? 'Mengirim…' : 'Kirim Aspirasi Sekarang' }} <ArrowRight class="size-5" /></button>
+              <button class="btn w-full rounded-full bg-brand py-4 text-base font-bold text-white shadow-lg shadow-emerald-600/25 hover:bg-brand-dark" :disabled="busy">{{ busy ? 'Mengirim…' : 'Kirim Aspirasi Sekarang' }} </button>
             </div>
           </form>
         </div>
