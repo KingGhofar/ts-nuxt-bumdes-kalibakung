@@ -1,4 +1,5 @@
-const PUBLIC = ['/login', '/publik']
+// `/` juga publik: halaman pertama = portal publik (index.vue meneruskan ke /publik).
+const PUBLIC = ['/', '/login', '/publik']
 
 export default defineNuxtRouteMiddleware(async (to) => {
   const { user, fetchMe } = useAuth()
