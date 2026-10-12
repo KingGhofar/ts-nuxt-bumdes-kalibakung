@@ -50,9 +50,10 @@ async function submit() {
 
       <div class="my-5 flex items-center gap-3 text-xs text-slate-500"><span class="h-px flex-1 border-t border-dashed border-slate-300" />atau<span class="h-px flex-1 border-t border-dashed border-slate-300" /></div>
 
-      <NuxtLink to="/publik" class="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium shadow-sm hover:bg-slate-50">
-        <ArrowLeft class="size-4" /> Kembali ke Portal Publik
-      </NuxtLink>
+      <div class="flex flex-col gap-2">
+        <NuxtLink to="/register" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium shadow-sm hover:bg-slate-50">Daftar Pengurus</NuxtLink>
+        <NuxtLink to="/publik" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium shadow-sm hover:bg-slate-50">Kembali ke Portal Publik</NuxtLink>
+      </div>
     </form>
   </main>
 </template>

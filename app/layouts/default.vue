@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { LayoutGrid, Building2, Store, FileBarChart, MessageSquareText, Settings, HelpCircle, LogOut, Plus, X } from 'lucide-vue-next'
+import { LayoutGrid, Building2, Store, FileBarChart, MessageSquareText, Settings, HelpCircle, LogOut, Plus, X, ShieldCheck } from 'lucide-vue-next'
 
 const route = useRoute()
 const brand = useBrand()
-const { logout } = useAuth()
+const { user, logout } = useAuth()
+const isSuper = computed(() => user.value?.role === 'SUPER_ADMIN')
 const { ask } = useConfirm()
 const drawer = ref(false)
 watch(() => route.fullPath, () => (drawer.value = false))
@@ -14,6 +15,7 @@ const menu = [
   { to: '/unit-usaha', label: 'Unit Usaha', icon: Store },
   { to: '/laporan-keuangan', label: 'Laporan Keuangan', icon: FileBarChart },
   { to: '/aspirasi', label: 'Aspirasi Warga', icon: MessageSquareText },
+  ...(isSuper.value ? [{ to: '/persetujuan-akun', label: 'Persetujuan Akun', icon: ShieldCheck }] : []),
 ]
 const bottom = [
   { to: '/pengaturan', label: 'Pengaturan', icon: Settings },

@@ -7,6 +7,9 @@ export default defineNuxtConfig({
   vite: { plugins: [tailwindcss()] },
   runtimeConfig: {
     jwtSecret: '', // diisi dari NUXT_JWT_SECRET
+    gmailUser: '', // GMAIL_USER
+    gmailAppPassword: '', // GMAIL_APP_PASSWORD
+    appUrl: '', // APP_URL
   },
   app: {
     head: {

@@ -25,18 +25,22 @@ enum StatusAspirasi {
 }
 
 model User {
-  id        Int               @id @default(autoincrement())
-  nama      String
-  email     String            @unique
-  password  String
-  jabatan   String?
-  telepon   String?
-  nik       String?
-  unitKerja String?           @map("unit_kerja")
-  avatar    String?
-  role      Role              @default(ADMIN)
-  createdAt DateTime          @default(now()) @map("created_at")
-  laporan   LaporanKeuangan[]
+  id                 Int               @id @default(autoincrement())
+  nama               String
+  email              String            @unique
+  password           String
+  jabatan            String?
+  telepon            String?
+  nik                String?
+  unitKerja          String?           @map("unit_kerja")
+  avatar             String?
+  role               Role              @default(ADMIN)
+  emailVerified      Boolean           @default(false) @map("email_verified")
+  approved           Boolean           @default(false)
+  verifyTokenHash    String?           @map("verify_token_hash")
+  verifyTokenExpires DateTime?         @map("verify_token_expires")
+  createdAt          DateTime          @default(now()) @map("created_at")
+  laporan            LaporanKeuangan[]
 
   @@map("users")
 }
