@@ -2,12 +2,9 @@ import bcrypt from 'bcryptjs'
 import { randomBytes, createHash } from 'node:crypto'
 import { z } from 'zod'
 
-// Wajib Gmail (termasuk sub-domain Google).
-const GMAIL = /^[a-z0-9._%+-]+@(?:gmail\.com|googlemail\.com)$/i
-
 const schema = z.object({
   nama: z.string().trim().min(2, 'Nama minimal 2 karakter').max(100),
-  email: z.email('Email tidak valid').refine(e => GMAIL.test(e), 'Gunakan alamat Gmail (gmail.com)'),
+  email: z.email('Email tidak valid'),
   password: z.string().min(8, 'Password minimal 8 karakter').max(100),
 })
 

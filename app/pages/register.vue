@@ -27,7 +27,7 @@ async function submit() {
     <div class="relative w-full max-w-sm rounded-3xl border border-white/60 bg-gradient-to-b from-emerald-50/85 via-white/85 to-white/90 p-7 text-center shadow-2xl shadow-slate-900/30 backdrop-blur-md sm:p-8">
       <template v-if="!done">
         <h1 class="mt-5 text-xl font-bold">Daftar Pengurus</h1>
-        <p class="mt-1.5 text-sm text-muted">Daftar dengan Gmail, lalu verifikasi lewat email. Akun aktif setelah disetujui admin.</p>
+        <p class="mt-1.5 text-sm text-muted">Daftar dengan email, lalu verifikasi lewat link yang dikirim. Akun aktif setelah disetujui admin.</p>
 
         <form class="mt-6 space-y-2.5 text-left" @submit.prevent="submit">
           <label class="relative block">
@@ -36,9 +36,9 @@ async function submit() {
             <input v-model="form.nama" required minlength="2" maxlength="100" placeholder="Nama lengkap" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm outline-none placeholder:text-slate-500 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20">
           </label>
           <label class="relative block">
-            <span class="sr-only">Email Gmail</span>
+            <span class="sr-only">Email</span>
             <Mail class="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-500" />
-            <input v-model="form.email" type="email" required placeholder="Email Gmail" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm outline-none placeholder:text-slate-500 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20">
+            <input v-model="form.email" type="email" required placeholder="Email" class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm outline-none placeholder:text-slate-500 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary/20">
           </label>
           <label class="relative block">
             <span class="sr-only">Kata sandi</span>
