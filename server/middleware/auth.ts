@@ -1,5 +1,5 @@
 // Semua /api/** wajib login, kecuali login, registrasi, verifikasi, & endpoint publik.
-const OPEN = ['/api/auth/login', '/api/auth/register', '/api/auth/verify', '/api/public']
+const OPEN = ['/api/auth/login', '/api/auth/register', '/api/auth/verify', '/api/auth/resend', '/api/public']
 
 export default defineEventHandler(async (event) => {
   const path = event.path.split('?')[0]

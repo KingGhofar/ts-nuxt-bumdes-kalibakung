@@ -48,8 +48,12 @@ async function submit() {
         {{ busy ? 'Memproses…' : 'Masuk' }}
       </button>
 
-      <div class="my-5 flex items-center gap-3 text-xs text-slate-500"><span class="h-px flex-1 border-t border-dashed border-slate-300" />atau<span class="h-px flex-1 border-t border-dashed border-slate-300" /></div>
+      <div class="my-6 flex items-center gap-3 text-xs text-slate-500"><span class="h-px flex-1 border-t border-dashed border-slate-300" />atau<span class="h-px flex-1 border-t border-dashed border-slate-300" /></div>
 
+      <div class="mb-4">
+        <p class="text-center text-sm text-muted">Belum menerima email verifikasi?</p>
+        <NuxtLink to="/resend-verifikasi" class="mt-1 block text-center text-sm font-semibold text-primary hover:underline">Kirim ulang link verifikasi</NuxtLink>
+      </div>
       <div class="flex flex-col gap-2">
         <NuxtLink to="/register" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium shadow-sm hover:bg-slate-50">Daftar Pengurus</NuxtLink>
         <NuxtLink to="/publik" class="w-full rounded-xl border border-slate-200 bg-white py-2.5 text-sm font-medium shadow-sm hover:bg-slate-50">Kembali ke Portal Publik</NuxtLink>
