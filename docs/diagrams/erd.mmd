@@ -1,0 +1,94 @@
+erDiagram
+    USERS ||--o{ LAPORAN_KEUANGAN : "menginput"
+    BUMDES ||--o{ UNIT_USAHA : "memiliki"
+    BUMDES ||--o{ LAPORAN_KEUANGAN : "menerbitkan"
+    BUMDES ||--o{ PENGURUS : "memiliki"
+
+    USERS {
+        bigint id PK
+        varchar nama
+        varchar email UK
+        varchar password
+        varchar jabatan
+        varchar telepon
+        varchar nik
+        varchar unit_kerja
+        varchar avatar
+        varchar role
+        boolean email_verified
+        boolean approved
+        varchar verify_token_hash
+        timestamp verify_token_expires
+        timestamp created_at
+    }
+    BUMDES {
+        bigint id PK
+        varchar nama
+        int tahun_berdiri
+        varchar dasar_hukum
+        varchar email
+        varchar telepon
+        text alamat
+        text deskripsi
+        text visi
+        text misi
+        varchar logo
+        text jam_operasional
+    }
+    PENGURUS {
+        bigint id PK
+        bigint bumdes_id FK
+        varchar nama
+        varchar jabatan
+        varchar keterangan
+        varchar foto
+        int urutan
+    }
+    UNIT_USAHA {
+        bigint id PK
+        bigint bumdes_id FK
+        varchar nama
+        varchar kategori
+        varchar penanggung_jawab
+        varchar kontak
+        text deskripsi
+        varchar foto
+        varchar metrik_label
+        varchar metrik_nilai
+        boolean aktif
+        timestamp created_at
+    }
+    LAPORAN_KEUANGAN {
+        bigint id PK
+        bigint bumdes_id FK
+        bigint created_by FK
+        int bulan
+        int tahun
+        bigint total_pemasukan
+        bigint total_pengeluaran
+        text keterangan
+        varchar file_lpj
+        varchar status
+        timestamp created_at
+        timestamp updated_at
+    }
+    ASPIRASI {
+        bigint id PK
+        varchar nama
+        varchar kategori
+        varchar whatsapp
+        varchar dusun
+        text pesan
+        varchar status
+        text catatan_internal
+        boolean publik
+        timestamp created_at
+    }
+    NOTIFIKASI {
+        bigint id PK
+        varchar judul
+        text pesan
+        varchar tipe
+        boolean dibaca
+        timestamp created_at
+    }

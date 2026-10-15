@@ -7,8 +7,10 @@ export default defineNuxtConfig({
   vite: { plugins: [tailwindcss()] },
   runtimeConfig: {
     jwtSecret: '', // diisi dari NUXT_JWT_SECRET
-    gmailUser: '', // GMAIL_USER
-    gmailAppPassword: '', // GMAIL_APP_PASSWORD
+    brevoUser: '', // BREVO_USER
+    brevoApiKey: '', // BREVO_API_KEY
+    brevoFromEmail: '', // BREVO_FROM_EMAIL
+    brevoFromName: '', // BREVO_FROM_NAME
     appUrl: '', // APP_URL
   },
   app: {

@@ -1,0 +1,12 @@
+erDiagram
+    USERS ||--o{ LAPORAN_KEUANGAN : "menginput"
+    BUMDES ||--o{ UNIT_USAHA : "memiliki"
+    BUMDES ||--o{ LAPORAN_KEUANGAN : "menerbitkan"
+    BUMDES ||--o{ PENGURUS : "memiliki"
+    USERS { bigint id PK }
+    BUMDES { bigint id PK }
+    PENGURUS { bigint id PK }
+    UNIT_USAHA { bigint id PK }
+    LAPORAN_KEUANGAN { bigint id PK }
+    ASPIRASI { bigint id PK }
+    NOTIFIKASI { bigint id PK }

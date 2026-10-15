@@ -1,0 +1,93 @@
+erDiagram
+    USERS ||--o{ LAPORAN_KEUANGAN : "menginput"
+    BUMDES ||--o{ UNIT_USAHA : "memiliki"
+    BUMDES ||--o{ LAPORAN_KEUANGAN : "menerbitkan"
+    BUMDES ||--o{ PENGURUS : "memiliki"
+    USERS {
+        int id PK
+        string nama
+        string email UK
+        string password
+        string jabatan
+        string telepon
+        string nik
+        string unit_kerja
+        string avatar
+        string role
+        boolean email_verified
+        boolean approved
+        string verify_token_hash
+        datetime verify_token_expires
+        datetime created_at
+    }
+    BUMDES {
+        int id PK
+        string nama
+        int tahun_berdiri
+        string dasar_hukum
+        string email
+        string telepon
+        string alamat
+        string deskripsi
+        string visi
+        string misi
+        string logo
+        string jam_operasional
+    }
+    PENGURUS {
+        int id PK
+        int bumdes_id FK
+        string nama
+        string jabatan
+        string keterangan
+        string foto
+        int urutan
+    }
+    UNIT_USAHA {
+        int id PK
+        int bumdes_id FK
+        string nama
+        string kategori
+        string penanggung_jawab
+        string kontak
+        string deskripsi
+        string foto
+        string metrik_label
+        string metrik_nilai
+        boolean aktif
+        datetime created_at
+    }
+    LAPORAN_KEUANGAN {
+        int id PK
+        int bumdes_id FK
+        int created_by FK
+        int bulan
+        int tahun
+        int total_pemasukan
+        int total_pengeluaran
+        string keterangan
+        string file_lpj
+        string status
+        datetime created_at
+        datetime updated_at
+    }
+    ASPIRASI {
+        int id PK
+        string nama
+        string kategori
+        string whatsapp
+        string dusun
+        string pesan
+        string status
+        string catatan_internal
+        boolean publik
+        datetime created_at
+    }
+    NOTIFIKASI {
+        int id PK
+        string judul
+        string pesan
+        string tipe
+        boolean dibaca
+        datetime created_at
+    }

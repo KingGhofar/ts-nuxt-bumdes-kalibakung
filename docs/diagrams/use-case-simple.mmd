@@ -1,0 +1,27 @@
+graph TD
+  W([Pengunjung/Warga])
+  P([Calon Pengurus])
+  A([Pengurus/Admin])
+  SA([Super Admin])
+  E([Sistem Email])
+
+  W --> UC1["Lihat Beranda & Profil"]
+  W --> UC2["Lihat Unit Usaha"]
+  W --> UC3["Lihat Laporan Publik"]
+  W --> UC4["Kirim Aspirasi"]
+
+  P --> UC5["Daftar Akun"]
+  P --> UC6["Verifikasi Email"]
+  UC5 -.-> E
+  E -.-> UC6
+
+  A --> UC7["Login"]
+  A --> UC8["Kelola Profil BUMDes"]
+  A --> UC9["Kelola Unit Usaha"]
+  A --> UC10["Kelola Laporan Keuangan"]
+  A --> UC11["Kelola Aspirasi"]
+  A --> UC12["Kelola Notifikasi"]
+  A --> UC13["Kelola Pengaturan"]
+
+  SA --> A
+  SA --> UC14["Setujui/Tolak Akun"]

@@ -1,20 +1,21 @@
-// Pengiriman email verifikasi via Gmail SMTP (App Password).
-// Bila kredensial belum diset di .env, link diverifikasi di-log ke console server
+// Pengiriman email verifikasi via Brevo SMTP.
+// Bila kredensial belum diset di .env, link verifikasi di-log ke console server
 // supaya alur tetap bisa diuji lokal tanpa kirim email sungguhan.
 import nodemailer from 'nodemailer'
 
 const cfg = () => {
   const config = useRuntimeConfig()
   return {
-    user: (config.gmailUser as string) || process.env.GMAIL_USER || '',
-    pass: (config.gmailAppPassword as string) || process.env.GMAIL_APP_PASSWORD || '',
-    from: (config.gmailUser as string) || process.env.GMAIL_USER || 'no-reply@bumdes.local',
+    user: (config.brevoUser as string) || process.env.BREVO_USER || '',
+    pass: (config.brevoApiKey as string) || process.env.BREVO_API_KEY || '',
+    fromEmail: (config.brevoFromEmail as string) || process.env.BREVO_FROM_EMAIL || 'no-reply@bumdeskalibakung.desa.id',
+    fromName: (config.brevoFromName as string) || process.env.BREVO_FROM_NAME || 'BUMDes Desa Kalibakung',
     appUrl: (config.appUrl as string) || process.env.APP_URL || 'http://localhost:3000',
   }
 }
 
 export async function sendVerifyEmail(to: string, nama: string, token: string) {
-  const { user, pass, from, appUrl } = cfg()
+  const { user, pass, fromEmail, fromName, appUrl } = cfg()
   const link = `${appUrl.replace(/\/$/, '')}/verify?token=${encodeURIComponent(token)}`
   const subjek = 'Verifikasi Email — Portal BUMDes Desa Kalibakung'
   const html = `
@@ -36,12 +37,17 @@ export async function sendVerifyEmail(to: string, nama: string, token: string) {
   }
 
   const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
+    host: 'smtp-relay.brevo.com',
+    port: 587,
+    secure: false, // TLS
     auth: { user, pass },
   })
 
-  await transporter.sendMail({ from: `BUMDes Desa Kalibakung <${from}>`, to, subject: subjek, html })
+  await transporter.sendMail({
+    from: `${fromName} <${fromEmail}>`,
+    to,
+    subject: subjek,
+    html,
+  })
   return { mode: 'sent' as const }
 }
